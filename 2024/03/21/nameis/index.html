@@ -33,21 +33,21 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>nameis - Hero Tale</title>
-  <meta name="keywords" content="tags hello,null">
+  <title>MWU method - Hero Tale</title>
+  <meta name="keywords" content="multiplicative weights update method; machine learning,null">
   <meta desc name="description" content="Where to see - Number - Hero Tale">
   
 <meta property="og:type" content="article">
-<meta property="og:title" content="nameis">
+<meta property="og:title" content="MWU method">
 <meta property="og:url" content="https://changgehundredfold.github.io/2024/03/21/nameis/index.html">
 <meta property="og:site_name" content="Hero Tale">
-<meta property="og:description" content="We study the decentralized optimization problem where the objective function is the summation of nonconvex differentiable cost functions privately held by $n$ agents, plus a common convex nonsmooth re">
+<meta property="og:description" content="The weighted marjority algorithm\begin{split}  &amp; 初始化 \eta\le \frac12,每个专家i的初始权重为w_i^1 &#x3D; 1\\ &amp; 对于第t个回合（1\le t\le T）\\ &amp; \qquad 服从两类专家中权重更大的那一方\\ &amp; \qquad 接受正确答案（上或者下），仅将回答错误的专家的权重缩减\\ &amp; \qquad \qquad w">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2024-03-21T09:02:00.000Z">
-<meta property="article:modified_time" content="2024-03-22T06:50:07.365Z">
+<meta property="article:modified_time" content="2024-03-23T06:53:04.924Z">
 <meta property="article:author" content="Number">
-<meta property="article:tag" content="tags hello">
+<meta property="article:tag" content="multiplicative weights update method; machine learning">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png">
   <style>
@@ -2112,7 +2112,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1711090224667),
+    lastupdate: new Date(1711177357081),
     cdn: {
       izitoast_css: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdn.bootcdn.net/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2466,7 +2466,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
       <h1 class="title" itemprop="name headline">
-        nameis
+        MWU method
       </h1>
       <div class='new-meta-box'>
         
@@ -2514,8 +2514,83 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   <div id="layoutHelper-page-plugins"></div>
   <div id="post-body" itemprop="articleBody">
-    <p>We study the decentralized optimization problem where the objective function is the summation of nonconvex differentiable cost functions privately held by $n$ agents, plus a common convex nonsmooth regularization.</p>
-<script type="math/tex; mode=display">\int_{-\infty}^{\infty} \exp{-x^2} = \sqrt{\pi}</script><p>hello hello</p>
+    <h1 id="The-weighted-marjority-algorithm"><a href="#The-weighted-marjority-algorithm" class="headerlink" title="The weighted marjority algorithm"></a>The weighted marjority algorithm</h1><script type="math/tex; mode=display">\begin{split}
+
+& 初始化 \eta\le \frac12,每个专家i的初始权重为w_i^1 = 1\\
+& 对于第t个回合（1\le t\le T）\\
+& \qquad 服从两类专家中权重更大的那一方\\
+& \qquad 接受正确答案（上或者下），仅将回答错误的专家的权重缩减\\
+& \qquad \qquad w_i^{t+1} = w_i^t(1-\eta)
+
+\end{split}</script><h2 id="Theroem"><a href="#Theroem" class="headerlink" title="Theroem"></a>Theroem</h2><p>在T回合结束后，记$m_i^T$为第i个专家的犯错次数，$M_i^T$为算法的犯错次数，那么有上界</p>
+<script type="math/tex; mode=display">M^T\le 2(1+\eta)m_i^T+\frac{2\ln n}{\eta}</script><p>对于任意的事后决策i都成立.</p>
+<p>_pf_:</p>
+<p>对于第t个回合来说，如果此回合中算法犯错，那么犯错专家的权重之和大于 $\frac 12$.根据定义，$w_i^{T+1} = (1-\eta)^{m_i^T}$</p>
+<p>记<script type="math/tex">\phi^t = \sum_{i=1}^nw_i^t</script></p>
+<p>则有</p>
+<script type="math/tex; mode=display">\phi^t(1-\eta)\le\phi^{t+1}\le \frac{\phi^t}{2}(1-\eta)+\frac{\phi^t}{2}</script><p>若算法没有犯错，则有</p>
+<script type="math/tex; mode=display">\frac{\phi^t}{2}(1-\eta)+\frac{\phi^t}{2}\le\phi^{t+1}\le \phi^t</script><p>进而</p>
+<script type="math/tex; mode=display">\phi^{T+1}\le n(1-\frac\eta2)^{M^T}</script><p>且</p>
+<script type="math/tex; mode=display">\phi^{T+1}\ge w_i^{T+1}</script><p>对于$\eta&lt;\frac12$, 有$-\ln (1-\eta)\le \eta+\eta^2$,命题成立</p>
+<h1 id="The-Multiplicative-Weights-Algorithm"><a href="#The-Multiplicative-Weights-Algorithm" class="headerlink" title="The Multiplicative Weights Algorithm"></a>The Multiplicative Weights Algorithm</h1><h2 id="Setting"><a href="#Setting" class="headerlink" title="Setting"></a>Setting</h2><p>更为广义的设定是，每一个回合中我们有n个决策，在选择决策之后会知晓所有决策对应的损失，同时得到我们所作出的决策对应的损失。</p>
+<h2 id="Notation"><a href="#Notation" class="headerlink" title="Notation"></a>Notation</h2><p>对于第t个回合(t=1,$\dots$,T), 第i个决策对应的权重为$p_i^t$,对应的损失为$m_i^t$，那么这一个回合的期望损失为$<p^t,m^t>$。从online learning的角度看，最后最小化<script type="math/tex">\sum_{t=1}^T<p^t,m^t>-\min_i \sum_{t=1}^Tm_i^t</script></p>
+<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><script type="math/tex; mode=display">
+\begin{split}
+& 初始化：固定\eta\le \frac12，w_i^1 = 1\\
+& 对于t=1 \dots,T\\
+& \qquad p^t = w^t/\|w^t\|_1,根据p^t随机选择一个决策i\\
+& \qquad 获得m^t\\
+& \qquad 根据每个决策的损失更新权重 w_i^{t+1} = w_i^t(1-\eta m_i^t)
+
+\end{split}</script><h2 id="Theorem"><a href="#Theorem" class="headerlink" title="Theorem"></a>Theorem</h2><p>假设所有损失$m_i^t\in [-1,1]$,$\eta\le \frac12$，那么对于任意事后决策i成立：</p>
+<script type="math/tex; mode=display">\sum_{t=1}^T<p^t,m^t>\le \sum_{t=1}^T m_i^t+\eta\sum_{t=1}^T|m_i^t|+\frac{\ln n}{\eta}</script><p>_pf_:</p>
+<script type="math/tex; mode=display">
+\begin{split}
+& \|w^{t+1}\|_1 = \sum_{i=1}^n w_i^{t+1} \\
+& = \sum_{i=1}^n w_i^{t}(1-\eta m_i^t)
+\\
+& =\|w^t\|_1-\eta\|w^t\|_1\sum_{i=1}^n p_i^tm_i^t\\
+& \le \|w^t\|_1 \exp(-\eta <p^t,m^t>)
+\end{split}</script><script type="math/tex; mode=display">\|w^{T+1}\|_1\le n\exp(-\eta\sum_{t=1}^T <p^t,m^t>)</script><p>根据指数函数的凸性，</p>
+<script type="math/tex; mode=display">(1-\eta)^x\le (1-\eta x), \quad x\in [0,1]</script><script type="math/tex; mode=display">(1+\eta)^{-x}\le 1-\eta x,\quad x\in [0,1]</script><p>因为$m_i^t\in [-1,1]$,对于所有决策i，</p>
+<script type="math/tex; mode=display">\|w^{T+1}\|_1\ge w_i^{T+1} = \prod_{t=1}^T(1-\eta m_i^t)\ge (1-\eta)^{\sum_{\ge 0}m_i^t}(1+\eta)^{-\sum_{< 0}m_i^t}</script><p>取对数，可知</p>
+<script type="math/tex; mode=display">\ln n - \eta\sum_{t=1}^T <p^t,m^t>\ge \sum_{\ge 0}m_i^t \ln (1-\eta) -\sum_{< 0}m_i^t\ln (1+\eta)</script><p>利用</p>
+<script type="math/tex; mode=display">
+\ln \frac1{1-\eta}\le \eta+\eta^2,\quad \ln (1+\eta)\ge \eta-\eta^2,\quad \eta\le \frac12</script><p>命题可证</p>
+<p>如果将命题中的不等式加权相加，可知对任意后验的决策上的分布p，有</p>
+<script type="math/tex; mode=display">\sum_{t=1}^T<p^t,m^t>\le \sum_{t=1}^T <m^t+\eta|m^t|,p>+\frac{\ln n}{\eta}</script><h1 id="Update-with-exponential-factors-The-Hedge-algorithm"><a href="#Update-with-exponential-factors-The-Hedge-algorithm" class="headerlink" title="Update with exponential factors: The Hedge algorithm"></a>Update with exponential factors: The Hedge algorithm</h1><script type="math/tex; mode=display">w_i^{t+1} = w_i^t\exp(-\eta m_i^t)</script><p>得到的上界略有不同，使用不等式<script type="math/tex">\exp(-\eta x)\le 1-\eta x+\eta^2x^2,\quad |\eta x|\le 1</script>替换前述不等式。</p>
+<h2 id="Theorem-1"><a href="#Theorem-1" class="headerlink" title="Theorem"></a>Theorem</h2><p>假设$m_i^t\in [-1,1],\eta\le 1$。Hedge算法保证在T回合之后，对于任意决策i，有</p>
+<script type="math/tex; mode=display">\sum_{t=1}^T\langle p^t,m^t\rangle = \sum_{t=1}^T m_i^t + \eta \sum_{t=1}^T \langle p^t,(m^t)^2\rangle + \frac{\ln n}{\eta}</script><h1 id="Proof-via-KL-divergence-why-MW-works"><a href="#Proof-via-KL-divergence-why-MW-works" class="headerlink" title="Proof via KL-divergence : why MW works"></a>Proof via KL-divergence : why MW works</h1><p>考虑以下情形：定义$\mathbb{P}$为在决策上的所有概率分布的凸子集，在每一个回合t中，决策者需要生成一个决策上的概率分布$p^t\in \mathbb{P}$，当做出决策之后，就会知晓$m^t$，决策者的期望损失是$\langle p^t,m^t \rangle$。在所有回合结束之后，我们希望比较决策者的总损失和后验的最佳决策概率分布(属于$\mathbb{P}$)带来的损失。</p>
+<script type="math/tex; mode=display">\min \quad \sum_{t=1}^T \langle p^t,m^t\rangle - \min_p \sum_{t=1}^T\langle p,m^t\rangle</script><h2 id="Algorithm-1"><a href="#Algorithm-1" class="headerlink" title="Algorithm"></a>Algorithm</h2><script type="math/tex; mode=display">
+\begin{split}
+& 初始化：固定\eta\le \frac12，选择p^1 = \frac1ne, e为全一向量\\
+& 对于t = 1,\dots,T\\
+& \qquad 根据p^t随机选择一个决策i\\
+& \qquad 知晓所有决策对应的损失m^t\\
+& \qquad 更新 \hat{p}_i^{t+1} = p_i^t(1-\eta m_i^t)/\phi^t，其中\phi^t是归一化常数\\
+& \qquad 投影获得p^{t+1} = \argmin_{p\in \mathbb{P}} KL(p||\hat{p}^{t+1}) 
+
+
+\end{split}</script><h2 id="Theorem-2"><a href="#Theorem-2" class="headerlink" title="Theorem"></a>Theorem</h2><p>假设$m_i^t\in [-1,1],\eta\le 1$。有限分布的MW算法保证在T回合之后，对于任意决策概率分布$p\in \mathbb{P}$，有</p>
+<script type="math/tex; mode=display">\sum_{t=1}^T \langle p^t,m^t\rangle \le \sum_{t=1}^T \langle(m^t+\eta|m^t|),p\rangle + \frac{KL(p||p^1)}{\eta}</script><p>_pf_:</p>
+<p>使用$p$和$p^t$的KL散度作为potential function</p>
+<script type="math/tex; mode=display">
+\begin{split}
+& \mathrm{KL}(p||\hat{p}^{t+1}) - \mathrm{KL}(p||p^t) = \sum_i p_i\ln \frac{p_i^t}{\hat{p}_i^{t+1}}\\
+& = \sum_i p_i\ln \frac{\phi^t}{1-\eta m_i^t}\\
+& \le \ln \frac{1}{1-\eta}\sum_{\ge 0}p_im_i^t + \ln (1+\eta)\sum_{<0}p_im_i^t + \ln \phi^t\\
+& \le \eta\langle p,m^t+\eta|m^t|\rangle + \ln \phi^t
+\end{split}</script><p>然后，我们有</p>
+<script type="math/tex; mode=display">\ln \phi^t = \ln \sum_{i}p_i^t(1-\eta m_i^t) = \ln (1-\eta \langle p^t,m^t\rangle)\le -\eta \langle p^t,m^t\rangle</script><p>从而有</p>
+<script type="math/tex; mode=display">
+\mathrm{KL}(p||\hat{p}^{t+1}) - \mathrm{KL}(p||p^t) \le \eta\langle p,m^t+\eta|m^t|\rangle -\eta \langle p^t,m^t\rangle</script><p>这个不等式说明了如果本回合的期望损失过大（相对于后验的p），那么$\hat{p}^{t+1}$在KL散度意义下比$p^t$距离$p$更近</p>
+<p>根据Generalized Pythagorean inequality,</p>
+<script type="math/tex; mode=display">\mathrm{KL}(p||p^{t+1}) - \mathrm{KL}(p^{t+1}||\hat{p}^{t+1})\le \mathrm{KL}(p||\hat{p}^{t+1})</script><p>从而</p>
+<script type="math/tex; mode=display">
+\mathrm{KL}(p||p^{t+1}) - \mathrm{KL}(p||p^t) \le \eta\langle p,m^t+\eta|m^t|\rangle -\eta \langle p^t,m^t\rangle</script><p>求和，可得</p>
+<script type="math/tex; mode=display">
+- \mathrm{KL}(p||p^1) \le \mathrm{KL}(p||p^{T+1}) - \mathrm{KL}(p||p^1) \le \sum_{t=1}^T\eta\langle p,m^t+\eta|m^t|\rangle -\eta \langle p^t,m^t\rangle</script><p>QED.</p>
+<h1 id="Gains-instead-of-loss"><a href="#Gains-instead-of-loss" class="headerlink" title="Gains instead of loss"></a>Gains instead of loss</h1><p>如果每一个回合获得的是收益$m_i^t$，只需要将前述定理中的$m_i^t$去负号</p>
 
   </div>
   
@@ -2540,10 +2615,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-03-22T14:50:07+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2024-03-23T14:53:04+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2024年3月22日</p>
+    <p>更新于：2024年3月23日</p>
   </a>
 </div>
 
@@ -2554,8 +2629,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
   
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/tags-hello/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>tags hello</p></a></div>
-  <span hidden itemprop="keywords">tags hello</span>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/multiplicative-weights-update-method-machine-learning/" rel="nofollow"><i class="fa-solid fa-hashtag fa-fw" aria-hidden="true"></i><p>multiplicative weights update method; machine learning</p></a></div>
+  <span hidden itemprop="keywords">multiplicative weights update method; machine learning</span>
   
 
 
@@ -2569,7 +2644,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://changgehundredfold.github.io/2024/03/21/nameis/&title=nameis - Hero Tale&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://changgehundredfold.github.io/2024/03/21/nameis/&title=MWU method - Hero Tale&summary="
           
           >
           
@@ -2581,7 +2656,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://changgehundredfold.github.io/2024/03/21/nameis/&title=nameis - Hero Tale&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://changgehundredfold.github.io/2024/03/21/nameis/&title=MWU method - Hero Tale&summary="
           
           >
           
@@ -2593,7 +2668,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=https://changgehundredfold.github.io/2024/03/21/nameis/&title=nameis - Hero Tale&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://changgehundredfold.github.io/2024/03/21/nameis/&title=MWU method - Hero Tale&summary="
           
           >
           
@@ -2690,7 +2765,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
   <div class='content'>
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Theroem"><span class="toc-text">Theroem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting"><span class="toc-text">Setting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Notation"><span class="toc-text">Notation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Algorithm"><span class="toc-text">Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Theorem"><span class="toc-text">Theorem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Theorem-1"><span class="toc-text">Theorem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Algorithm-1"><span class="toc-text">Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Theorem-2"><span class="toc-text">Theorem</span></a></li></ol>
   </div>
 </section>
 
@@ -3238,7 +3313,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"Hero Tale","url":"https://ChangGeHundredfold.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Number","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://ChangGeHundredfold.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Where to see"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://ChangGeHundredfold.github.io/","name":"Hero Tale"}},{"@type":"ListItem","position":3,"item":{"@id":"https://ChangGeHundredfold.github.io/2024/03/21/nameis/","name":"nameis"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"Hero Tale","url":"https://ChangGeHundredfold.github.io/","keywords":null,"description":"Where to see","author":{"@type":"Person","name":"Number","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://ChangGeHundredfold.github.io/","description":"Where to see"},"publisher":{"@type":"Organization","name":"Hero Tale","url":"https://ChangGeHundredfold.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://ChangGeHundredfold.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"nameis","description":"Where to see","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://changgehundredfold.github.io/2024/03/21/nameis/"},"author":{"@type":"Person","name":"Number","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://ChangGeHundredfold.github.io/"},"publisher":{"@type":"Organization","name":"Hero Tale","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://changgehundredfold.github.io/2024/03/21/nameis/","wordCount":0,"datePublished":"2024-03-21T09:02:00.000Z","dateModified":"2024-03-22T06:50:07.365Z","keywords":"tags hello","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"Hero Tale","url":"https://ChangGeHundredfold.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"Number","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://ChangGeHundredfold.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Where to see"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://ChangGeHundredfold.github.io/","name":"Hero Tale"}},{"@type":"ListItem","position":3,"item":{"@id":"https://ChangGeHundredfold.github.io/2024/03/21/nameis/","name":"MWU method"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"Hero Tale","url":"https://ChangGeHundredfold.github.io/","keywords":null,"description":"Where to see","author":{"@type":"Person","name":"Number","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://ChangGeHundredfold.github.io/","description":"Where to see"},"publisher":{"@type":"Organization","name":"Hero Tale","url":"https://ChangGeHundredfold.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"https://ChangGeHundredfold.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"MWU method","description":"Where to see","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://changgehundredfold.github.io/2024/03/21/nameis/"},"author":{"@type":"Person","name":"Number","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"https://ChangGeHundredfold.github.io/"},"publisher":{"@type":"Organization","name":"Hero Tale","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"https://changgehundredfold.github.io/2024/03/21/nameis/","wordCount":0,"datePublished":"2024-03-21T09:02:00.000Z","dateModified":"2024-03-23T06:53:04.924Z","keywords":"multiplicative weights update method; machine learning","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
